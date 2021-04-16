@@ -36,6 +36,13 @@ The ingra-gw service provides us with higher level access to the kubernetes clus
             "name": "namespace-name"
         }
         ```
+    - [X] `/apps/mysql` Creates new mysql instance in provided namespace
+        ```json
+        {
+            "name": "mysql-name",
+            "namespace": "namespace-name"
+        }
+        ```
 
 * ### DELETE
     - [X] `/namespaces"` Deletes namespaces by name
