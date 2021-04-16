@@ -44,5 +44,14 @@ func CreateMySQL(ctx context.Context, appCtx *c.AppContext) http.HandlerFunc {
 			return
 		}
 		// Create response
+		resp := types.CreateMySQLResponse {
+			Message: "OK",
+			Status: http.StatusOK,
+		}
+
+		if err := helper.WriteJSONResponse(w, resp); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
 }
