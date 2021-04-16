@@ -6,6 +6,7 @@ import (
 
 	c "infra-gw/src/cont"
 	"infra-gw/src/api/resources"
+	"infra-gw/src/api/apps"
 
 	"github.com/gorilla/mux"
 )
@@ -62,6 +63,7 @@ func (w *Web) SetupRoutes(ctx context.Context, appCtx *c.AppContext) {
 	w.httpServer.Handler.(*mux.Router).Path("/namespaces").Methods("GET").HandlerFunc(resources.ListNamespaces(ctx, appCtx))
 	// POST Requests
 	w.httpServer.Handler.(*mux.Router).Path("/namespaces").Methods("POST").HandlerFunc(resources.CreateNamespaces(ctx, appCtx))
+	w.httpServer.Handler.(*mux.Router).Path("/apps/mysql").Methods("POST").HandlerFunc(apps.CreateMySQL(ctx, appCtx))
 	// DELETE Requests
 	w.httpServer.Handler.(*mux.Router).Path("/namespaces").Methods("POST").HandlerFunc(resources.DeleteNamespaces(ctx, appCtx))
 }

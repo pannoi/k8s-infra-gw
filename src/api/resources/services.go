@@ -50,11 +50,11 @@ func ListServices(ctx context.Context, appCtx *c.AppContext) http.HandlerFunc {
 	}
 }
 
-func CreateService(
+func CreateServices(
 	serviceName string,
 	namespaceName string,
 	containerPort int,
-	appCtx *c.AppContext) string {
+	appCtx *c.AppContext) error {
 	
 	bg := context.Background()
 
@@ -84,8 +84,8 @@ func CreateService(
 
 	_, err := appCtx.K8s.Clientset.CoreV1().Services(namespaceName).Create(bg, service, metav1.CreateOptions{})
 	if err != nil {
-		panic(err)
+		return err
 	}
 
-	return "OK"
+	return nil
 }

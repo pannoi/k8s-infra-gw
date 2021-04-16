@@ -51,13 +51,13 @@ func ListDeployments(ctx context.Context, appCtx *c.AppContext) http.HandlerFunc
 	}
 }
 
-func CreateDeployment(
+func CreateDeployments(
 		deploymentName string, 
 		namespaceName string, 
 		resourceType string,
 		imageName string,
 		containerPort int,
-		appCtx *c.AppContext) string {
+		appCtx *c.AppContext) error {
 
 	bg := context.Background()
 	
@@ -101,8 +101,8 @@ func CreateDeployment(
 
 	_, err := appCtx.K8s.Clientset.AppsV1().Deployments(namespaceName).Create(bg, deployment, metav1.CreateOptions{})
 	if err != nil {
-		panic(err)
+		return err
 	}
 
-	return "OK"
+	return nil
 }
