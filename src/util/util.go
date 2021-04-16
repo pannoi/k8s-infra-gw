@@ -41,3 +41,9 @@ func MustGenerateRandomAsByte(len int) []byte {
 
 	return []byte(base64.RawStdEncoding.Strict().EncodeToString(buff))
 }
+
+//Int32 returns a pointer to an int32
+func Int32(i int32) *int32 {
+	return &i
+}
+var Int32Ptr = Int32

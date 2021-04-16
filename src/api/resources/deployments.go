@@ -10,6 +10,8 @@ import (
 	"infra-gw/src/api/helper"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	appsv1 "k8s.io/api/apps/v1"
+	corev1 "k8s.io/api/core/v1"
 )
 
 func ListDeployments(ctx context.Context, appCtx *c.AppContext) http.HandlerFunc {
@@ -47,4 +49,60 @@ func ListDeployments(ctx context.Context, appCtx *c.AppContext) http.HandlerFunc
 			return
 		}
 	}
+}
+
+func CreateDeployment(
+		deploymentName string, 
+		namespaceName string, 
+		resourceType string,
+		imageName string,
+		containerPort int,
+		appCtx *c.AppContext) string {
+
+	bg := context.Background()
+	
+	containerPort32 := int32(containerPort)
+
+	deployment := &appsv1.Deployment{
+		ObjectMeta: metav1.ObjectMeta{
+			Name: deploymentName,
+		},
+		Spec: appsv1.DeploymentSpec{
+			Replicas: util.Int32Ptr(1),
+			Selector: &metav1.LabelSelector{
+				MatchLabels: map[string]string{
+					"app": resourceType,
+				},
+			},
+			Template: corev1.PodTemplateSpec{
+				ObjectMeta: metav1.ObjectMeta{
+					Labels: map[string]string{
+						"app": resourceType,
+					},
+				},
+				Spec: corev1.PodSpec{
+					Containers: []corev1.Container{
+							{
+							Name: deploymentName,
+							Image: imageName,
+							Ports: []corev1.ContainerPort{
+								{
+									Name: deploymentName,
+									Protocol: corev1.ProtocolTCP,
+									ContainerPort: containerPort32,
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+
+	_, err := appCtx.K8s.Clientset.AppsV1().Deployments(namespaceName).Create(bg, deployment, metav1.CreateOptions{})
+	if err != nil {
+		panic(err)
+	}
+
+	return "OK"
 }
