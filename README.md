@@ -4,7 +4,7 @@ The ingra-gw service provides us with higher level access to the kubernetes clus
 
 ## Run 
 
-`go run main.go` or `make run`
+`go run main.go`
 
 ### Flags 
 
