@@ -38,7 +38,12 @@ The ingra-gw service provides us with higher level access to the kubernetes clus
         ```
 
 * ### DELETE
-    - [X] `/namespaces/{namespace_name}"` Deletes namespaces by name
+    - [X] `/namespaces"` Deletes namespaces by name
+        ```json
+        {
+            "name": "namespace-name"
+        }
+        ```
 
 
 ## In-Cluster
