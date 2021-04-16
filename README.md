@@ -46,3 +46,16 @@ In this mode, `k8s-gw` gets credentials from he mounted service account.
 Make sure to create a service account and assign it the necessary RBAC permissions (see k8s/
 dir). This mode is enabled by a `-inCluster` flag.
 
+## Docker
+
+Run following command to build docker image
+
+```shell
+docker build -t infra-k8s-gw -f docker/Dockerfile . 
+```
+
+To run docker container use following command
+
+```shell
+docker run -it -d --rm --name k8s-infra-gw -p 4444:4444 infra-k8s-gw
+```
