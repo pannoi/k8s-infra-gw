@@ -53,7 +53,8 @@ func ListDeployments(ctx context.Context, appCtx *c.AppContext) http.HandlerFunc
 
 func CreateDeployments(
 		deploymentName string, 
-		namespaceName string, 
+		namespaceName string,
+		envVars []corev1.EnvVar,
 		resourceType string,
 		imageName string,
 		containerPort int,
@@ -92,6 +93,7 @@ func CreateDeployments(
 									ContainerPort: containerPort32,
 								},
 							},
+							Env: envVars,
 						},
 					},
 				},

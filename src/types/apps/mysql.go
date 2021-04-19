@@ -10,4 +10,6 @@ type CreateMySQLRequest struct {
 type CreateMySQLResponse struct {
 	Status int `json: "status"`
 	Message string `json: "message"`
+	DatabaseUsername string `json: "username"`
+	DatabasePassword map[string][]byte `json: "password"`
 }

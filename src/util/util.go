@@ -10,6 +10,8 @@ import (
 	"go.uber.org/zap"
 
 	c "infra-gw/src/cont"
+
+	corev1 "k8s.io/api/core/v1"
 )
 
 // HomeDir returns homedir path
@@ -47,3 +49,7 @@ func Int32(i int32) *int32 {
 	return &i
 }
 var Int32Ptr = Int32
+
+func SecretKeyRef(name, key string) *corev1.EnvVarSource {
+	return &corev1.EnvVarSource{SecretKeyRef: &corev1.SecretKeySelector{LocalObjectReference: corev1.LocalObjectReference{Name: name}, Key: key}}
+}
