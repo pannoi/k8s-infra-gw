@@ -25,7 +25,7 @@ func ListDeployments(ctx context.Context, appCtx *c.AppContext) http.HandlerFunc
 			ns = []string{""}
 		}
 
-		deployments, err := appCtx.K8s.Clientset.ExtensionsV1beta1().Deployments(ns[0]).List(ctx, metav1.ListOptions{})
+		deployments, err := appCtx.K8s.Clientset.AppsV1().Deployments(ns[0]).List(ctx, metav1.ListOptions{})
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
