@@ -62,7 +62,9 @@ func (w *Web) SetupRoutes(ctx context.Context, appCtx *c.AppContext) {
 	w.httpServer.Handler.(*mux.Router).Path("/ingresses").Methods("GET").HandlerFunc(resources.ListIngresses(ctx, appCtx))
 	w.httpServer.Handler.(*mux.Router).Path("/namespaces").Methods("GET").HandlerFunc(resources.ListNamespaces(ctx, appCtx))
 	// POST Requests
+	// Kubernetes Resources
 	w.httpServer.Handler.(*mux.Router).Path("/namespaces").Methods("POST").HandlerFunc(resources.CreateNamespaces(ctx, appCtx))
+	// Custom applications
 	w.httpServer.Handler.(*mux.Router).Path("/apps/mysql").Methods("POST").HandlerFunc(apps.CreateMySQL(ctx, appCtx))
 	// DELETE Requests
 	w.httpServer.Handler.(*mux.Router).Path("/namespaces").Methods("DELETE").HandlerFunc(resources.DeleteNamespaces(ctx, appCtx))
