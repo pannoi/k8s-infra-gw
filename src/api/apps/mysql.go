@@ -49,7 +49,7 @@ func CreateMySQL(ctx context.Context, appCtx *c.AppContext) http.HandlerFunc {
 		// Create Deployment
 		err = resources.CreateDeployments(req.Name, req.Namespace, envVars, mysqlType, mysqlImage, mysqlPort, appCtx)
 		if err != nil {
-			log.Errorw("Could not create deployment", "err", err.Error())
+			log.Errorw("Could not create deployment for mysql", "err", err.Error())
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
@@ -57,7 +57,7 @@ func CreateMySQL(ctx context.Context, appCtx *c.AppContext) http.HandlerFunc {
 		// Create Service
 		err = resources.CreateServices(req.Name, req.Namespace, mysqlPort, appCtx)
 		if err != nil {
-			log.Errorw("Could not create service", "err", err.Error())
+			log.Errorw("Could not create service for mysql", "err", err.Error())
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}

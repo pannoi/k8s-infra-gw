@@ -66,6 +66,7 @@ func (w *Web) SetupRoutes(ctx context.Context, appCtx *c.AppContext) {
 	w.httpServer.Handler.(*mux.Router).Path("/namespaces").Methods("POST").HandlerFunc(resources.CreateNamespaces(ctx, appCtx))
 	// Custom applications
 	w.httpServer.Handler.(*mux.Router).Path("/apps/mysql").Methods("POST").HandlerFunc(apps.CreateMySQL(ctx, appCtx))
+	w.httpServer.Handler.(*mux.Router).Path("/apps/redis").Methods("POST").HandlerFunc(apps.CreateRedis(ctx, appCtx))
 	// DELETE Requests
 	w.httpServer.Handler.(*mux.Router).Path("/namespaces").Methods("DELETE").HandlerFunc(resources.DeleteNamespaces(ctx, appCtx))
 }
